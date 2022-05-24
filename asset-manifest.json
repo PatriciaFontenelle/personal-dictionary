@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/tcc/static/css/main.f692b11b.chunk.css",
-    "main.js": "/tcc/static/js/main.f0d881cf.chunk.js",
-    "main.js.map": "/tcc/static/js/main.f0d881cf.chunk.js.map",
-    "runtime-main.js": "/tcc/static/js/runtime-main.836a0218.js",
-    "runtime-main.js.map": "/tcc/static/js/runtime-main.836a0218.js.map",
-    "static/js/2.a49ede00.chunk.js": "/tcc/static/js/2.a49ede00.chunk.js",
-    "static/js/2.a49ede00.chunk.js.map": "/tcc/static/js/2.a49ede00.chunk.js.map",
-    "index.html": "/tcc/index.html",
-    "static/css/main.f692b11b.chunk.css.map": "/tcc/static/css/main.f692b11b.chunk.css.map",
-    "static/js/2.a49ede00.chunk.js.LICENSE.txt": "/tcc/static/js/2.a49ede00.chunk.js.LICENSE.txt",
-    "static/media/blue.34c882dd.png": "/tcc/static/media/blue.34c882dd.png",
-    "static/media/resetPassword.css": "/tcc/static/media/main-bg.8eee368e.jpg",
-    "static/media/white.e94fb9cc.png": "/tcc/static/media/white.e94fb9cc.png"
+    "main.css": "/personal-dictionary/static/css/main.317ccb66.chunk.css",
+    "main.js": "/personal-dictionary/static/js/main.f0d881cf.chunk.js",
+    "main.js.map": "/personal-dictionary/static/js/main.f0d881cf.chunk.js.map",
+    "runtime-main.js": "/personal-dictionary/static/js/runtime-main.e7911136.js",
+    "runtime-main.js.map": "/personal-dictionary/static/js/runtime-main.e7911136.js.map",
+    "static/js/2.c53dbb2f.chunk.js": "/personal-dictionary/static/js/2.c53dbb2f.chunk.js",
+    "static/js/2.c53dbb2f.chunk.js.map": "/personal-dictionary/static/js/2.c53dbb2f.chunk.js.map",
+    "index.html": "/personal-dictionary/index.html",
+    "static/css/main.317ccb66.chunk.css.map": "/personal-dictionary/static/css/main.317ccb66.chunk.css.map",
+    "static/js/2.c53dbb2f.chunk.js.LICENSE.txt": "/personal-dictionary/static/js/2.c53dbb2f.chunk.js.LICENSE.txt",
+    "static/media/blue.34c882dd.png": "/personal-dictionary/static/media/blue.34c882dd.png",
+    "static/media/resetPassword.css": "/personal-dictionary/static/media/main-bg.8eee368e.jpg",
+    "static/media/white.e94fb9cc.png": "/personal-dictionary/static/media/white.e94fb9cc.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.836a0218.js",
-    "static/js/2.a49ede00.chunk.js",
-    "static/css/main.f692b11b.chunk.css",
+    "static/js/runtime-main.e7911136.js",
+    "static/js/2.c53dbb2f.chunk.js",
+    "static/css/main.317ccb66.chunk.css",
     "static/js/main.f0d881cf.chunk.js"
   ]
 }
