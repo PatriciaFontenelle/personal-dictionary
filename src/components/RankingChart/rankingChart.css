@@ -1,0 +1,30 @@
+.table-words-scroll {
+  max-height: 100%;
+  overflow: auto;
+  padding: 0 10px 0 0;
+  height: 100%;
+}
+
+
+
+/* width */
+.table-words-scroll::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+/* Track */
+.table-words-scroll::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px #d2d6cf;
+  border-radius: 10px;
+}
+
+/* Handle */
+.table-words-scroll::-webkit-scrollbar-thumb {
+  background: #4cb944;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+.table-words-scroll::-webkit-scrollbar-thumb:hover {
+  background: #348f2e;
+}

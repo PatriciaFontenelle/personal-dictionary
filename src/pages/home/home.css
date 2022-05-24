@@ -1,0 +1,40 @@
+.home-main {
+    background-color: #FEFEFE;
+    min-height: 100vh;
+    max-width: 100vw;
+}
+
+.second-row-charts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-areas: 'pizza ranking';
+    grid-gap: 20px;
+    width: 100%;
+}
+
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.status-chart {
+    display: flex;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.submissions-chart {
+    grid-area: pizza;
+}
+
+.ranking-chart {
+    grid-area: ranking;
+}
+
+@media screen and (max-width: 690px) {
+    .second-row-charts {
+        grid-template-areas: "pizza" "ranking";
+    }
+}

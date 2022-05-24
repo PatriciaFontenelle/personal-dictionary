@@ -1,0 +1,20 @@
+.ne-header {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.ne-add-btn span {
+    font-weight: bold;
+}
+
+
+.ant-space-align-center {
+    gap: 5px !important;
+}
+
+@media screen and (max-width: 860px) {
+    .ne-table {
+        overflow-x: auto;
+    }
+}

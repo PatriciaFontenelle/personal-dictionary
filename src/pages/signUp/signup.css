@@ -1,0 +1,130 @@
+.signup-main {
+    background-image: url('../../assets/images/main-bg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.signup-content {
+    background-color: #FEFEFE;
+    width: 80%;
+    height: 80%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    opacity: .9;
+    border-radius: 10px;
+    -webkit-box-shadow: 0px 0px 15px 3px rgba(0,0,0,0.3); 
+    box-shadow: 0px 0px 15px 3px rgba(0,0,0,0.3);
+    display: grid;
+    grid-template-columns: fit-content(100%) 10px 1fr;
+    grid-template-areas: "steps divider form";
+    grid-gap: 20px;
+    padding: 5%; 
+}
+
+.steps-container {
+    grid-area: steps;
+}
+
+.form-container {
+    grid-area: form;
+}
+
+.signup-divider {
+    grid-area: divider;
+    height: 100% !important;
+    width: 50px !important;
+}
+
+.ant-steps-icon {
+    cursor: pointer;
+}
+
+.signup-footer {
+    position: absolute;
+    bottom: calc(10% + 40px);
+}
+
+.signup-footer button+button {
+    margin-left: 15px;
+}
+
+.form-content {
+    height: 100%;
+}
+
+.ant-form-item-control-input-content label {
+    display: flex;
+    justify-content: center;
+}
+
+.signup-username {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.revisao {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+@media screen and (max-width: 850px) {
+    .steps-container .ant-steps-vertical {
+        flex-direction: row;
+    }
+
+    .signup-content {
+        grid-template-areas: "steps"
+                            "form";
+        justify-items: center;
+        grid-template-columns: 100%;
+    }
+
+    .form-container {
+        width: 100%;
+    }
+
+    .signup-divider {
+        display: none;
+    }
+
+    .ant-steps-vertical > .ant-steps-item:not(:last-child) > .ant-steps-item-container > .ant-steps-item-tail {
+        display: none !important;
+    }
+}
+
+@media screen and (max-width: 620px) {
+    .signup-main {
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    .steps-container {
+        display: none;
+    }
+
+    .signup-content {
+        grid-template-areas: "form";
+        grid-template-rows: 100%;
+        width: 100%;
+        height: 80%;
+        border-radius: 0;
+        align-items: flex-start;
+        overflow: hidden;
+        padding: 40px;
+    }
+
+    .signup-divider {
+        display: none;
+    }
+
+}

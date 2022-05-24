@@ -1,0 +1,22 @@
+.status-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-areas: "nivel enganos";
+    grid-column-gap: 20px;
+    width: 100%;
+}
+
+.nivel-card {
+    grid-area: nivel;
+}
+
+.enganos-card {
+    grid-area: enganos;
+}
+
+@media screen and (max-width: 690px) {
+    .status-container {
+        grid-template-areas: "nivel"
+                            "enganos";
+    }
+}

@@ -1,0 +1,37 @@
+.layout-main {
+    overflow: hidden;
+    height: 100vh;
+    width: 100%;
+    background-color: #FAFAFA;
+}
+
+.page-container {
+    width: 80%;
+    margin: 1% auto;
+    background-color: #FFF;
+    display: flex;
+    overflow-y: auto;
+}
+
+.page-content {
+    width: calc(100% - 150px);
+    min-height: 400px;
+    justify-content: center;
+    padding: 2% 5%;
+    border-radius: 10px;
+    max-height: calc(100vh - 95px);
+}
+
+@media screen and (max-width: 860px) {
+    .page-container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        margin: 0;
+    }
+
+    .page-content {
+        width: 100%;
+        overflow-x: hidden;
+    }
+}
