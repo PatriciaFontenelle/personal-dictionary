@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getUser } from "../../services/auth";
-import { Button, message } from "antd";
+import { Button, message, Spin } from "antd";
 import { LeftOutlined } from '@ant-design/icons';
 import api from "../../services/api";
 
@@ -12,6 +12,7 @@ import RankingChart from "../../components/RankingChart";
 import NewExpression from "../../components/NewExpression";
 import { useMenu } from "../../contexts/menuContext";
 import CategoryList from "../../components/CategoryList";
+import { isEmpty } from "../../utils/utils";
 
 const Home = () => {
   const [user, setUser] = useState({});
@@ -40,22 +41,23 @@ const Home = () => {
     <div style={{'width': '100%'}}>
       {
         menu.title === 'Dashboard' ?
-        data ?
-        <div className="dashboard-container">
-          <div className="status-chart">
-            <StatusChart data={data} />
-          </div>
-          <div className="second-row-charts">
-            <div className="submissions-chart">
-              <SubmissionsChart adata={data} updateDashboard={(e) => getData()} />
+        <Spin spinning={isEmpty(data)}>
+          <div className="dashboard-container">
+            <div className="status-chart">
+              <StatusChart data={data} />
             </div>
-            {data?.misses_ranking?.length > 0 && (
-              <div className="ranking-chart">
-                <RankingChart data={data?.misses_ranking} />
+            <div className="second-row-charts">
+              <div className="submissions-chart">
+                <SubmissionsChart adata={data} updateDashboard={(e) => getData()} />
               </div>
-            )}
+              {data?.misses_ranking?.length > 0 && (
+                <div className="ranking-chart">
+                  <RankingChart data={data?.misses_ranking} />
+                </div>
+              )}
+            </div>
           </div>
-        </div> : null
+        </Spin>
         : 
         menu.title === 'Cadastro' ?
           <div className="cadastro-container">

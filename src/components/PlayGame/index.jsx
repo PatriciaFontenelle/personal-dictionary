@@ -21,6 +21,7 @@ const Play = ({ match, updateDashboard, category, handleEmptyCategory }) => {
       .get("/play/", {params})
       .then((response) => {
         console.log('response.data.response')
+        console.log(response)
         if(response.data.results.length != 0) {
           setData(response.data?.results);
           setMeaning("");
@@ -45,6 +46,8 @@ const Play = ({ match, updateDashboard, category, handleEmptyCategory }) => {
     api
       .post("/play/", values)
       .then((response) => {
+        console.log('response')
+        console.log(response)
         setStatus(response.data?.results?.correct);
         setLoading(false);
         updateDashboard();

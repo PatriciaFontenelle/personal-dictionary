@@ -15,7 +15,7 @@ const SignUp = () => {
 
   // Fields
   const [username, setUsername] = useState("");
-  const [lastname, setLastname] = useState("");
+  const [last_name, setLastname] = useState("");
   const [photo, setPhoto] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -26,8 +26,8 @@ const SignUp = () => {
 
   const [formRef] = Form.useForm();
 
-  function onFinish() {
-    const data = { username, lastname, email, password, photo };
+  const onFinish = () => {
+    const data = { username, last_name, email, password, photo };
     api
       .post("users/", data)
       .then((response) => history.push("signin/"))
@@ -150,7 +150,7 @@ const SignUp = () => {
                   requiredMark="optional"
                 >
                   <Input
-                    value={lastname}
+                    value={last_name}
                     onChange={(e) => setLastname(e.target.value)}
                   />
                 </Form.Item>
@@ -206,7 +206,7 @@ const SignUp = () => {
               <div className="revisao">
                 <Avatar src={photo} size={150} icon={<UserOutlined />} />
                 <span className="signup-username">
-                  {`${username} ${lastname}`}
+                  {`${username} ${last_name}`}
                 </span>
                 <h4>{email}</h4>
               </div>

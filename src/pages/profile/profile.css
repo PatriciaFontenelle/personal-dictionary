@@ -19,6 +19,8 @@
 
 .user-name {
     font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 20px;
 }
 
 .filter-btns {
@@ -26,21 +28,20 @@
     margin-top: 20px;
 }
 
-.ant-radio-group {
-    width: 100%;
-    display: flex !important;
-    justify-content: center;
-}
-
-.ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled),
-.ant-radio-button-wrapper {
-    width: 30%;
-    text-align: center;
-}
-
 .info-container {
     background-color: #FFF;
     width: 90%;
     min-height: 400px;
     padding: 2% 5%;
+}
+
+.profile-footer .ant-form-item-control-input-content {
+    display: flex;
+    justify-content: space-between;
+}
+
+@media screen and (max-width: 860px) {
+    .profile-container {
+        padding: 5%;
+    }
 }
