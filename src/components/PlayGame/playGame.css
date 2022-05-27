@@ -1,0 +1,15 @@
+.play-custom-card:hover {
+    opacity: 0.5;
+}
+
+.game-result, .game-example {
+    margin-bottom: 20px;
+}
+
+.game-footer {
+    text-align: center;
+}
+
+.game-next-btn {
+    max-width: 400px;
+}

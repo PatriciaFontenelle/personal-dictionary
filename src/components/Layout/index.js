@@ -8,7 +8,7 @@ const Layout = (props) => {
         <div className="layout-main">
             <Navbar />
             <div className="page-container">
-                <BottomMenu />
+                {window.location.pathname !== '/personal-dictionary/profile' && <BottomMenu />}
                 <div className="page-content">
                     {props.children}
                 </div>

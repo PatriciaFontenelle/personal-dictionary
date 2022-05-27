@@ -33,7 +33,7 @@ const PrivateRoute = ({ component: Component, layout: Layout, ...rest }) => (
 
 export default function Routes() {
     return (
-        <BrowserRouter>
+        <BrowserRouter basename={process.env.PUBLIC_URL}>
             <Switch>
                 <UserProvider>
                     <MenuProvider>

@@ -13,6 +13,7 @@
 .signup-content {
     background-color: #FEFEFE;
     width: 80%;
+    max-width: 1000px;
     height: 80%;
     overflow-y: auto;
     overflow-x: hidden;
@@ -46,8 +47,10 @@
 }
 
 .signup-footer {
-    position: absolute;
-    bottom: calc(10% + 40px);
+    position: relative;
+    bottom: 10%;
+    width: 100%;
+    text-align: right;
 }
 
 .signup-footer button+button {
@@ -58,9 +61,23 @@
     height: 100%;
 }
 
+.form-content input {
+    max-width: 400px;
+}
+
+.form-content .ant-form-vertical {
+    height: 100% !important;
+}
+
 .ant-form-item-control-input-content label {
     display: flex;
     justify-content: center;
+}
+
+.ant-form-vertical .ant-form-item {
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .signup-username {
@@ -70,10 +87,11 @@
 
 .revisao {
     width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 @media screen and (max-width: 850px) {
@@ -86,10 +104,12 @@
                             "form";
         justify-items: center;
         grid-template-columns: 100%;
+        grid-template-rows: max-content 1fr;
     }
 
     .form-container {
         width: 100%;
+        height: 100%;
     }
 
     .signup-divider {
@@ -120,11 +140,13 @@
         border-radius: 0;
         align-items: flex-start;
         overflow: hidden;
-        padding: 40px;
     }
 
     .signup-divider {
         display: none;
     }
 
+    .signup-footer {
+        right: 5%;
+    }
 }

@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { Card, Typography, Input } from "antd";
-import { RedoOutlined, SearchOutlined } from "@ant-design/icons";
+import { Card, Typography, Input, Button } from "antd";
+import { RedoOutlined, RightOutlined } from "@ant-design/icons";
 import api from "../../services/api";
-import "./index.css";
+import "./playGame.css";
 
 const { Text } = Typography;
 
-const Play = ({ match, updateDashboard, category }) => {
+const Play = ({ match, updateDashboard, category, handleEmptyCategory }) => {
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(false);
   const [meaning, setMeaning] = useState("");
   const [status, setStatus] = useState(null);
-  function getData() {
+  
+  const getData = () => {
     setLoading(true);
     const params = {
       category
@@ -19,9 +20,14 @@ const Play = ({ match, updateDashboard, category }) => {
     api
       .get("/play/", {params})
       .then((response) => {
-        setData(response.data?.results);
-        setMeaning("");
-        setStatus(null);
+        console.log('response.data.response')
+        if(response.data.results.length != 0) {
+          setData(response.data?.results);
+          setMeaning("");
+          setStatus(null);
+        } else {
+          handleEmptyCategory()
+        }
         setLoading(false);
       })
       .catch((error) => {
@@ -30,7 +36,7 @@ const Play = ({ match, updateDashboard, category }) => {
       });
   }
 
-  function onSubmit() {
+  const onSubmit = () => {
     if (!meaning) return;
     if (!data?.id) return;
     if (status !== null) return;
@@ -52,6 +58,7 @@ const Play = ({ match, updateDashboard, category }) => {
   useEffect(() => {
     getData();
   }, []);
+
   return (
     <>
       <Card
@@ -68,20 +75,19 @@ const Play = ({ match, updateDashboard, category }) => {
                 style={{ fontSize: "16px", color: "#08c" }}
               />
             </div>
-            <div>Novo</div>
+            <div>Pular</div>
           </div>
         }
-        style={{ width: 300, height: 300 }}
+        style={{ width: '100%', height: 'fit-content' }}
         loading={loading}
       >
         <div>
-          {data?.description && <Text disabled>{data?.description}</Text>}
           <Input
             style={{ marginTop: "0.5rem" }}
             placeholder="Informe aqui a tradução"
             addonAfter={
               status === null && (
-                <SearchOutlined
+                <RightOutlined
                   style={{ cursor: "pointer", fontSize: "1rem" }}
                   onClick={(e) => onSubmit()}
                 />
@@ -94,7 +100,7 @@ const Play = ({ match, updateDashboard, category }) => {
             }}
           />
           <hr style={{ marginTop: "1rem", marginBottom: "1rem" }} />
-          <div>
+          <div className="game-result">
             <h4>Resultado: </h4>
             {status === null && (
               <h4 style={{ color: "#ccc" }}>Não informado</h4>
@@ -139,6 +145,15 @@ const Play = ({ match, updateDashboard, category }) => {
                 </span>
               </>
             )}
+          </div>
+          {data?.description && 
+            <div className="game-example">
+              <h4>Exemplo de uso:</h4>
+              <h4 style={{color: '#CCC'}}>{data?.description}</h4>
+            </div>
+          }
+          <div className="game-footer">
+            <Button className="game-next-btn" block type="primary" onClick={() => getData()}>Próximo</Button>
           </div>
         </div>
       </Card>

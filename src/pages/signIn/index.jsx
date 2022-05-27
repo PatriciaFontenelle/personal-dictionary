@@ -1,105 +1,106 @@
-import React, { useEffect, useState } from "react";
-import { useHistory, Link } from "react-router-dom";
-import { Form, Input, Button, Divider } from "antd";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
+import { Form, Input, Button, Divider, message } from "antd";
 import api from "../../services/api";
 import "./signin.css";
 import { TOKEN_FIELD, USER_FIELD } from "../../services/auth";
 import { useUser } from "../../contexts/userContext";
-import logo from '../../assets/logo/blue.png';
+import logo from "../../assets/logo/blue.png";
+import PasswordInput from "../../components/PasswordInput";
 
 const SignIn = () => {
-  const [email, setEmail] = useState('');
-  const [errorMessage, setErrorMessage] = useState();
-  const {setUser} = useUser();
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { setUser } = useUser();
 
   const history = useHistory();
-  function onFinish(data) {
+
+  const onFinish = (data) => {
+    setLoading(true);
     api
       .post("api-token-auth/", data)
       .then((response) => {
         localStorage.setItem(TOKEN_FIELD, response.data.token);
-        localStorage.setItem(USER_FIELD, JSON.stringify(response.data.user))       
-        setUser(response.data.user)
+        localStorage.setItem(USER_FIELD, JSON.stringify(response.data.user));
+        setUser(response.data.user);
+        setLoading(false);
         history.push("/");
       })
-      .catch((error) => setErrorMessage({login: 'Credenciais inválidas, tente novamente.'}));
-  }
+      .catch((error) => {
+        const eMessage = Object.values(error.response.data)[0][0];
+        if (eMessage !== "Este campo é obrigatório.") message.error(eMessage);
+        setLoading(false);
+      });
+  };
 
-  function navigate(path) {
+  const navigate = (path) => {
     history.push(path);
-  }
+  };
 
   const changedEmail = (email) => {
-    setErrorMessage({ ...errorMessage, username: "", login: "" })
-    setEmail(email)
-  }
-
-  const signIn = (e) => {
-    console.log("Entrou");
-
-    const messages = {};
-
-    if (e.username === "" || !e.username)
-      messages.username = "Por favor, informe o nome do usuário.";
-
-    if (e.password === "" || !e.password)
-      messages.password = "Por favor, informe a senha.";
-
-    if (Object.keys(messages).length > 0) {
-        setErrorMessage(messages);
-    } else {
-        onFinish(e)
-    }
-
-    console.log(e);
+    setEmail(email);
   };
 
   const forgotPassword = () => {
+    if (email === "") {
+      message.error("Por favor, informe o seu e-mail.");
+      return;
+    }
+
     api
-    .get(`/reset-password/?email=${email}`)
-    .then(res => {
-      alert('E-mail enviado')
-    })
-    .catch(e => {
-      console.error(e)
-    })
-  }
+      .get(`/reset-password/?email=${email}`)
+      .then((res) => {
+        message.success("E-mail enviado.");
+      })
+      .catch((e) => {
+        message.error(Object.values(e.response.data)[0][0]);
+      });
+  };
 
   return (
     <div className="login-main">
       <div className="login-content">
         <div className="login-form">
-          <img className="login-logo" src={logo} alt='logo'/>
-          <Form layout="vertical" onFinish={(e) => signIn(e)}>
-            <Form.Item label="E-mail">
-              <Form.Item name="username">
-                <Input
-                  onChange={(e) =>
-                    changedEmail(e.target.value)
-                  }
-                />
-              </Form.Item>
-              <div className="erro-login mt-20">{errorMessage?.username}</div>
+          <img className="login-logo" src={logo} alt="logo" />
+          <Form layout="vertical" onFinish={onFinish}>
+            <Form.Item
+              label="E-mail"
+              name="username"
+              requiredMark="optional"
+              rules={[
+                { required: true, message: "Por favor, informe o seu e-mail." },
+              ]}
+            >
+              <Input onChange={(e) => changedEmail(e.target.value)} />
             </Form.Item>
 
-            <Form.Item label="Senha">
-              <Form.Item name="password">
-                <Input
-                  type="password"
-                  onChange={() =>
-                    setErrorMessage({ ...errorMessage, password: "", login: "" })
-                  }
-                />
-              </Form.Item>
-              <div className="erro-login mt-20">{errorMessage?.password}</div>
-              <a href="#" className="forgot-password" onClick={() => forgotPassword()}>Esqueceu a senha?</a>
+            <Form.Item
+              label="Senha"
+              name="password"
+              requiredMark="optional"
+              rules={[
+                { required: true, message: "Por favor, informe a sua senha." },
+              ]}
+            >
+              <PasswordInput />
             </Form.Item>
+
+            <div className="forgot-password">
+              <a href="#" onClick={() => forgotPassword()}>
+                Esqueceu a senha?
+              </a>
+            </div>
 
             <Form.Item>
-              <Button htmlType="submit" block>
+              <Button
+                loading={loading}
+                className="signin-btn"
+                type="primary"
+                htmlType="submit"
+                block
+              >
                 Entrar
               </Button>
-              <div className="erro-login">{errorMessage?.login}</div>
             </Form.Item>
           </Form>
           <Divider>ou</Divider>

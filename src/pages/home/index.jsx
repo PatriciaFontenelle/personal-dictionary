@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getUser } from "../../services/auth";
-import { Button } from "antd";
+import { Button, message } from "antd";
 import { LeftOutlined } from '@ant-design/icons';
 import api from "../../services/api";
 
@@ -19,7 +19,7 @@ const Home = () => {
   const [gameCategory, setGameCategory] = useState()
   const {menu} = useMenu();
   
-  function getData() {
+  const getData = () => {
     api
       .get("/dashboard/")
       .then((response) => setData(response.data))
@@ -30,6 +30,11 @@ const Home = () => {
     setUser(getUser());
     getData();
   }, []);
+
+  const handleEmptyCategory = () => {
+    setGameCategory(null);
+    message.error("Não existem expressões nessa categoria.")
+  }
 
   return (
     <div style={{'width': '100%'}}>
@@ -66,7 +71,7 @@ const Home = () => {
               <LeftOutlined />
               Voltar
             </Button>
-            <Play category={gameCategory.id} setCategory={setGameCategory} updateDashboard={(e) => getData()} />
+            <Play category={gameCategory.id} handleEmptyCategory={handleEmptyCategory} setCategory={setGameCategory} updateDashboard={(e) => getData()} />
           </div>
         : null
 

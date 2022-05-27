@@ -1,7 +1,7 @@
 {
   "name": "tcc",
   "version": "0.1.0",
-  "homepage": "https://patriciafontenelle.github.io/tcc",
+  "homepage": "https://patriciafontenelle.github.io/personal-dictionary/",
   "private": true,
   "dependencies": {
     "@ant-design/plots": "^1.0.9",

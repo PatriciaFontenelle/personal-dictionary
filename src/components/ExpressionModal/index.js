@@ -1,4 +1,4 @@
-import { Modal, Radio, Form, Select, Input } from 'antd';
+import { Modal, Radio, Form, Select, Input, message } from 'antd';
 import { useEffect, useState } from 'react';
 import api from '../../services/api';
 
@@ -50,14 +50,17 @@ const ExpressionModal = (props) => {
             api
                 .put(`/expressions/${expression.id}/`, expression)
                 .then(res => {
+                    props.handleClose('Expressão alterada com sucesso!')
                     props.setVisible(false);
+                    
                 })
                 .catch((error) => {
                     console.error(error);
                 })
-
-        } else if (type === 'categoria') {
-            api
+                
+            } else if (type === 'categoria') {
+                props.handleClose('Categoria adicionada com sucesso!')
+                api
                 .post("/categories/", category)
                 .then(res => {
                     props.setVisible(false);
@@ -65,10 +68,11 @@ const ExpressionModal = (props) => {
                 .catch(e => {
                     console.error(e);
                 })
-        } else {
-            api
-              .post("/expressions/", expression)
-              .then(res => {
+            } else {
+                api
+                .post("/expressions/", expression)
+                .then(res => {
+                  props.handleClose('Expressão adicionada com sucesso!')
                   props.setVisible(false)
               })
               .catch((error) => {
