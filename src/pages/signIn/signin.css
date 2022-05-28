@@ -54,10 +54,6 @@
     min-width: 100px;
 }
 
-/* .signin-btn {
-    margin-top: 20px;
-} */
-
 @media screen and (max-width: 550px) {
     .login-content {
         width: 100%;

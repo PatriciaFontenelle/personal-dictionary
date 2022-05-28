@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getUser } from "../../services/auth";
 import { Button, message, Spin } from "antd";
-import { LeftOutlined } from '@ant-design/icons';
+import { LeftOutlined } from "@ant-design/icons";
 import api from "../../services/api";
 
 import "./home.css";
@@ -17,15 +17,15 @@ import { isEmpty } from "../../utils/utils";
 const Home = () => {
   const [user, setUser] = useState({});
   const [data, setData] = useState({});
-  const [gameCategory, setGameCategory] = useState()
-  const {menu} = useMenu();
-  
+  const [gameCategory, setGameCategory] = useState();
+  const { menu } = useMenu();
+
   const getData = () => {
     api
       .get("/dashboard/")
       .then((response) => setData(response.data))
       .catch((error) => console.error(error));
-  }
+  };
 
   useEffect(() => {
     setUser(getUser());
@@ -34,13 +34,12 @@ const Home = () => {
 
   const handleEmptyCategory = () => {
     setGameCategory(null);
-    message.error("Não existem expressões nessa categoria.")
-  }
+    message.error("Não existem expressões nessa categoria.");
+  };
 
   return (
-    <div style={{'width': '100%'}}>
-      {
-        menu.title === 'Dashboard' ?
+    <div style={{ width: "100%" }}>
+      {menu.title === "Dashboard" ? (
         <Spin spinning={isEmpty(data)}>
           <div className="dashboard-container">
             <div className="status-chart">
@@ -48,7 +47,10 @@ const Home = () => {
             </div>
             <div className="second-row-charts">
               <div className="submissions-chart">
-                <SubmissionsChart adata={data} updateDashboard={(e) => getData()} />
+                <SubmissionsChart
+                  adata={data}
+                  updateDashboard={(e) => getData()}
+                />
               </div>
               {data?.misses_ranking?.length > 0 && (
                 <div className="ranking-chart">
@@ -58,26 +60,29 @@ const Home = () => {
             </div>
           </div>
         </Spin>
-        : 
-        menu.title === 'Cadastro' ?
-          <div className="cadastro-container">
-            <NewExpression updateDashboard={(e) => getData()} />
-          </div>
-        : 
-        menu.title === 'Jogar' ?
-          !gameCategory ?
+      ) : menu.title === "Cadastro" ? (
+        <div className="cadastro-container">
+          <NewExpression updateDashboard={(e) => getData()} />
+        </div>
+      ) : menu.title === "Jogar" ? (
+        !gameCategory ? (
           <CategoryList setCategory={setGameCategory} />
-          :
+        ) : (
           <div className="jogar-container">
             <Button type="text" onClick={() => setGameCategory(null)}>
               <LeftOutlined />
               Voltar
             </Button>
-            <Play category={gameCategory.id} handleEmptyCategory={handleEmptyCategory} setCategory={setGameCategory} updateDashboard={(e) => getData()} />
+            <Play
+              dashboardData={data}
+              category={gameCategory.id}
+              handleEmptyCategory={handleEmptyCategory}
+              setCategory={setGameCategory}
+              updateDashboard={(e) => getData()}
+            />
           </div>
-        : null
-
-      }
+        )
+      ) : null}
     </div>
 
     // <div style={{ width: "100%", height: "100%" }}>

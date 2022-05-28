@@ -6,7 +6,7 @@ import "./playGame.css";
 
 const { Text } = Typography;
 
-const Play = ({ match, updateDashboard, category, handleEmptyCategory }) => {
+const Play = ({ dashboardData, updateDashboard, category, handleEmptyCategory }) => {
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(false);
   const [meaning, setMeaning] = useState("");
@@ -23,6 +23,8 @@ const Play = ({ match, updateDashboard, category, handleEmptyCategory }) => {
         console.log('response.data.response')
         console.log(response)
         if(response.data.results.length != 0) {
+          console.log('response.data?.results');
+          console.log(response.data?.results);
           setData(response.data?.results);
           setMeaning("");
           setStatus(null);
@@ -38,6 +40,8 @@ const Play = ({ match, updateDashboard, category, handleEmptyCategory }) => {
   }
 
   const onSubmit = () => {
+    console.log('dashboardData')
+    console.log(dashboardData)
     if (!meaning) return;
     if (!data?.id) return;
     if (status !== null) return;
@@ -64,6 +68,7 @@ const Play = ({ match, updateDashboard, category, handleEmptyCategory }) => {
 
   return (
     <>
+      {data.length === 0 && alert('teste')}
       <Card
         title={data?.phrase}
         extra={
@@ -88,6 +93,7 @@ const Play = ({ match, updateDashboard, category, handleEmptyCategory }) => {
           <Input
             style={{ marginTop: "0.5rem" }}
             placeholder="Informe aqui a tradução"
+            disabled={status !== null}
             addonAfter={
               status === null && (
                 <RightOutlined
