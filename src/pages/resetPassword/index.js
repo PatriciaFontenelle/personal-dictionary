@@ -7,7 +7,7 @@ import api from '../../services/api';
 
 import './resetPassword.css';
 
-const ResetPassword = () => {
+const ResetPassword = (props) => {
     const history = useHistory();
     const [password, setPassword] = useState('');
     const [seePassword, setSeePassword] = useState(false);
@@ -15,9 +15,11 @@ const ResetPassword = () => {
     const [seeConfirmPassword, setSeeConfirmPassword] = useState(false);
 
     const onSubmit = (e) => {
-        const queryString = window.location.search;
+        const queryString = props.location.search;
         const urlParams = new URLSearchParams(queryString);
         const key = urlParams.get('key');
+        console.log('queryString')
+        console.log(queryString)
 
         const values = {key, new_password: password, new_password2: confirmPassword}
 

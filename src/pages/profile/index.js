@@ -16,8 +16,6 @@ const Profile = () => {
   const { user, setUser } = useUser();
 
   useEffect(() => {
-    console.log("user");
-    console.log(user);
     if (!user) {
       setUser(getUser());
     }

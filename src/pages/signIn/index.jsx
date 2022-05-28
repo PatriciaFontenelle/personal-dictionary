@@ -15,7 +15,7 @@ const SignIn = () => {
 
   const history = useHistory();
 
-  const onFinish = (data) => {
+  const signIn = (data) => {
     setLoading(true);
     api
       .post("api-token-auth/", data)
@@ -62,7 +62,7 @@ const SignIn = () => {
       <div className="login-content">
         <div className="login-form">
           <img className="login-logo" src={logo} alt="logo" />
-          <Form layout="vertical" onFinish={onFinish}>
+          <Form layout="vertical" onFinish={signIn}>
             <Form.Item
               label="E-mail"
               name="username"

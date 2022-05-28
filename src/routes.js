@@ -9,13 +9,14 @@ import Layout from "./components/Layout";
 import { UserProvider } from "./contexts/userContext";
 import { MenuProvider } from "./contexts/menuContext";
 import ResetPassword from "./pages/resetPassword";
+import { HashRouter } from "react-router-dom";
 
-const PrivateRoute = ({ component: Component, layout: Layout, ...rest }) => (
+const PrivateRoute = ({ component: Component, layout: Layout, showMenu: showMenu, ...rest }) => (
     <Route
         {...rest}
         render={(props) =>
             isAuthenticated() ? (
-                <Layout {...props}>
+                <Layout showMenu={showMenu} {...props}>
                     <Component {...props} />
                 </Layout>
             ) : (
@@ -33,7 +34,7 @@ const PrivateRoute = ({ component: Component, layout: Layout, ...rest }) => (
 
 export default function Routes() {
     return (
-        <BrowserRouter basename={process.env.PUBLIC_URL}>
+        <HashRouter>
             <Switch>
                 <UserProvider>
                     <MenuProvider>
@@ -41,11 +42,11 @@ export default function Routes() {
                         <Route path="/signup" component={SignUp} />
                         <Route path="/forgot-password" component={ResetPassword} />
                         {/* <RouteWrapper path="/consulta/" component={Consulta} /> */}
-                        <PrivateRoute path="/profile" component={Profile} layout={Layout} />
-                        <PrivateRoute exact path="/" component={Home} layout={Layout} />
+                        <PrivateRoute path="/profile" component={Profile} layout={Layout} showMenu={false} />
+                        <PrivateRoute exact path="/" component={Home} layout={Layout} showMenu={true} />
                     </MenuProvider>
                 </UserProvider>
             </Switch>
-        </BrowserRouter>
+        </HashRouter>
     );
 }
