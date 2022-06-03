@@ -1,4 +1,4 @@
-import { Divider, Form, Input, Button } from 'antd';
+import { Divider, Form, Input, Button, message } from 'antd';
 import { useState } from 'react';
 import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
@@ -18,15 +18,15 @@ const ResetPassword = (props) => {
         const queryString = props.location.search;
         const urlParams = new URLSearchParams(queryString);
         const key = urlParams.get('key');
-        console.log('queryString')
-        console.log(queryString)
 
         const values = {key, new_password: password, new_password2: confirmPassword}
 
         api
         .post('/reset-password/', values)
         .then(res => {
-            alert('Sucesso')
+            setTimeout(() => {
+                message.success('Sucesso')
+            }, 3000)
             history.push('/signin')
         })
         .catch(e => {

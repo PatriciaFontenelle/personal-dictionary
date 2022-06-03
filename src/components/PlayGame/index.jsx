@@ -1,35 +1,48 @@
 import React, { useEffect, useState } from "react";
-import { Card, Typography, Input, Button } from "antd";
+import { Card, Typography, Input, Button, message } from "antd";
 import { RedoOutlined, RightOutlined } from "@ant-design/icons";
+import { useHistory } from "react-router-dom";
 import api from "../../services/api";
 import "./playGame.css";
 
 const { Text } = Typography;
 
-const Play = ({ dashboardData, updateDashboard, category, handleEmptyCategory }) => {
+const Play = ({
+  dashboardData,
+  updateDashboard,
+  category,
+  handleEmptyCategory,
+  setCategory,
+  setCompletedCategory
+}) => {
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(false);
   const [meaning, setMeaning] = useState("");
   const [status, setStatus] = useState(null);
   
-  const getData = () => {
+  const history = useHistory();
+ 
+  const getData = (source) => {
     setLoading(true);
     const params = {
-      category
-    }
+      category,
+    };
     api
-      .get("/play/", {params})
+      .get("/play/", { params })
       .then((response) => {
-        console.log('response.data.response')
-        console.log(response)
-        if(response.data.results.length != 0) {
-          console.log('response.data?.results');
+        console.log("response.data.response");
+        console.log(response);
+        if (response.data.results.length != 0) {
+          console.log("response.data?.results");
           console.log(response.data?.results);
           setData(response.data?.results);
           setMeaning("");
           setStatus(null);
         } else {
+          !source ? 
           handleEmptyCategory()
+          :
+          onCategoryFinish()
         }
         setLoading(false);
       })
@@ -37,11 +50,19 @@ const Play = ({ dashboardData, updateDashboard, category, handleEmptyCategory })
         console.error(error);
         setLoading(false);
       });
+  };
+
+  const onCategoryFinish = () => {
+    message.success('Parabéns! Você completou todas as expressões desta categoria!') 
+    setTimeout(() => {
+      setCompletedCategory(category);
+      setCategory(null)
+    }, 5000)
   }
 
   const onSubmit = () => {
-    console.log('dashboardData')
-    console.log(dashboardData)
+    console.log("dashboardData");
+    console.log(dashboardData);
     if (!meaning) return;
     if (!data?.id) return;
     if (status !== null) return;
@@ -50,8 +71,6 @@ const Play = ({ dashboardData, updateDashboard, category, handleEmptyCategory })
     api
       .post("/play/", values)
       .then((response) => {
-        console.log('response')
-        console.log(response)
         setStatus(response.data?.results?.correct);
         setLoading(false);
         updateDashboard();
@@ -60,7 +79,7 @@ const Play = ({ dashboardData, updateDashboard, category, handleEmptyCategory })
         console.error(error);
         setLoading(false);
       });
-  }
+  };
 
   useEffect(() => {
     getData();
@@ -68,7 +87,7 @@ const Play = ({ dashboardData, updateDashboard, category, handleEmptyCategory })
 
   return (
     <>
-      {data.length === 0 && alert('teste')}
+      {data.length === 0 && alert("teste")}
       <Card
         title={data?.phrase}
         extra={
@@ -86,7 +105,7 @@ const Play = ({ dashboardData, updateDashboard, category, handleEmptyCategory })
             <div>Pular</div>
           </div>
         }
-        style={{ width: '100%', height: 'fit-content' }}
+        style={{ width: "100%", height: "fit-content" }}
         loading={loading}
       >
         <div>
@@ -155,14 +174,22 @@ const Play = ({ dashboardData, updateDashboard, category, handleEmptyCategory })
               </>
             )}
           </div>
-          {data?.description && 
+          {data?.description && (
             <div className="game-example">
               <h4>Exemplo de uso:</h4>
-              <h4 style={{color: '#CCC'}}>{data?.description}</h4>
+              <h4 style={{ color: "#CCC" }}>{data?.description}</h4>
             </div>
-          }
+          )}
           <div className="game-footer">
-            <Button className="game-next-btn" block type="primary" onClick={() => getData()}>Próximo</Button>
+            <Button
+              className="game-next-btn"
+              block
+              type="primary"
+              onClick={() => getData('proximo-btn')}
+              disabled={!status}
+            >
+              Próximo
+            </Button>
           </div>
         </div>
       </Card>

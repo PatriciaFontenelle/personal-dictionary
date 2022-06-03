@@ -18,6 +18,7 @@ const Home = () => {
   const [user, setUser] = useState({});
   const [data, setData] = useState({});
   const [gameCategory, setGameCategory] = useState();
+  const [completedCategory, setCompletedCategory] = useState('')
   const { menu } = useMenu();
 
   const getData = () => {
@@ -66,7 +67,7 @@ const Home = () => {
         </div>
       ) : menu.title === "Jogar" ? (
         !gameCategory ? (
-          <CategoryList setCategory={setGameCategory} />
+          <CategoryList setCategory={setGameCategory} completedCategory={completedCategory} />
         ) : (
           <div className="jogar-container">
             <Button type="text" onClick={() => setGameCategory(null)}>
@@ -74,6 +75,7 @@ const Home = () => {
               Voltar
             </Button>
             <Play
+              setCompletedCategory={setCompletedCategory}
               dashboardData={data}
               category={gameCategory.id}
               handleEmptyCategory={handleEmptyCategory}

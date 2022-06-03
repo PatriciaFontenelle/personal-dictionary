@@ -20,18 +20,26 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
-  const [btnDisabled, setBtnDisabled] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const history = useHistory();
 
   const [formRef] = Form.useForm();
 
   const onFinish = () => {
+    setLoading(true);
     const data = { username, last_name, email, password, photo };
     api
       .post("users/", data)
-      .then((response) => history.push("signin/"))
+      .then((response) => {
+        setLoading(false);
+        setTimeout(() => {
+          message.success("Cadastro realizado com sucesso")  
+        }, 3000)
+        history.push("signin/")
+      })
       .catch((error) => {
+        setLoading(false);
         message.error(capitalize(Object.values(error.response.data)[0][0]));
 
         if(Object.keys(error.response.data)[0] === 'email') {
@@ -71,6 +79,7 @@ const SignUp = () => {
           type="primary"
           style={currentStep == 2 ? {} : { display: "none" }}
           onClick={() => onFinish()}
+          loading={loading}
         >
           Cadastrar
         </Button>
