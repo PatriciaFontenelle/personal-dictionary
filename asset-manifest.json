@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/personal-dictionary/static/css/main.f8a1c215.chunk.css",
-    "main.js": "/personal-dictionary/static/js/main.30a93c18.chunk.js",
-    "main.js.map": "/personal-dictionary/static/js/main.30a93c18.chunk.js.map",
+    "main.css": "/personal-dictionary/static/css/main.c9aee20f.chunk.css",
+    "main.js": "/personal-dictionary/static/js/main.1394ed08.chunk.js",
+    "main.js.map": "/personal-dictionary/static/js/main.1394ed08.chunk.js.map",
     "runtime-main.js": "/personal-dictionary/static/js/runtime-main.e7911136.js",
     "runtime-main.js.map": "/personal-dictionary/static/js/runtime-main.e7911136.js.map",
     "static/js/2.69202a66.chunk.js": "/personal-dictionary/static/js/2.69202a66.chunk.js",
     "static/js/2.69202a66.chunk.js.map": "/personal-dictionary/static/js/2.69202a66.chunk.js.map",
     "index.html": "/personal-dictionary/index.html",
-    "static/css/main.f8a1c215.chunk.css.map": "/personal-dictionary/static/css/main.f8a1c215.chunk.css.map",
+    "static/css/main.c9aee20f.chunk.css.map": "/personal-dictionary/static/css/main.c9aee20f.chunk.css.map",
     "static/js/2.69202a66.chunk.js.LICENSE.txt": "/personal-dictionary/static/js/2.69202a66.chunk.js.LICENSE.txt",
     "static/media/blue.34c882dd.png": "/personal-dictionary/static/media/blue.34c882dd.png",
     "static/media/resetPassword.css": "/personal-dictionary/static/media/main-bg.8eee368e.jpg",
@@ -17,7 +17,7 @@
   "entrypoints": [
     "static/js/runtime-main.e7911136.js",
     "static/js/2.69202a66.chunk.js",
-    "static/css/main.f8a1c215.chunk.css",
-    "static/js/main.30a93c18.chunk.js"
+    "static/css/main.c9aee20f.chunk.css",
+    "static/js/main.1394ed08.chunk.js"
   ]
 }
