@@ -1,6 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { Input, Button, Table, Space, message, Tabs, Popconfirm, Modal } from "antd";
-import { DeleteOutlined, EditOutlined, PlusOutlined, WarningOutlined } from "@ant-design/icons";
+import {
+  Input,
+  Button,
+  Table,
+  Space,
+  message,
+  Tabs,
+  Popconfirm,
+  Modal,
+} from "antd";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  PlusOutlined,
+  WarningOutlined,
+} from "@ant-design/icons";
 import ExpressionModal from "../ExpressionModal";
 import api from "../../services/api";
 
@@ -12,13 +26,15 @@ const NewExpression = ({ updateDashboard }) => {
 
   const [loading, setLoading] = useState(false);
   const [expressions, setExpressions] = useState([]);
+  const [originalCategories, setOriginalcategories] = useState([]);
   const [categories, setCategories] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [edit, setEdit] = useState(false);
   const [record, setRecord] = useState(null);
   const [search, setSearch] = useState("");
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [tab, setTab] = useState("");
 
   const getData = () => {
     setLoading(true);
@@ -36,39 +52,39 @@ const NewExpression = ({ updateDashboard }) => {
         console.error(error);
         setLoading(false);
       });
-  }
+  };
 
   const deleteExpression = (id) => {
     api
       .delete(`/expressions/${id}/`)
       .then((res) => {
-        console.log("Deletou");
         getData();
       })
       .catch((e) => {
         console.log(e);
       });
-  }
+  };
 
   const editExpression = (expression) => {
     setEdit(true);
     setRecord(expression);
     setModalVisible(true);
-  }
+  };
 
   const getCategories = () => {
     setLoading(true);
     api
-      .get('/categories/')
+      .get("/categories/")
       .then((res) => {
         setCategories(res.data.results);
-        setLoading(false)
+        setOriginalcategories(res.data.results);
+        setLoading(false);
       })
       .catch((e) => {
         console.error(e);
         setLoading(false);
-      })
-  }
+      });
+  };
 
   const deleteCategory = () => {
     setDeleteModalVisible(false);
@@ -76,7 +92,7 @@ const NewExpression = ({ updateDashboard }) => {
     api
       .delete(`/categories/${selectedCategory}/`)
       .then((res) => {
-        message.success('Categoria deletada com sucesso!');
+        message.success("Categoria deletada com sucesso!");
         getCategories();
         getData();
         setLoading(false);
@@ -84,8 +100,8 @@ const NewExpression = ({ updateDashboard }) => {
       .catch((e) => {
         console.error(e);
         setLoading(false);
-      })
-  }
+      });
+  };
 
   useEffect(() => {
     if (!modalVisible) {
@@ -95,21 +111,34 @@ const NewExpression = ({ updateDashboard }) => {
       getData();
       getCategories();
     }
-  }, [modalVisible, search]);
+  }, [modalVisible]);
+
+  useEffect(() => {
+    if (search === "") {
+      setCategories(originalCategories);
+    } else {
+      filterCategories();
+    }
+
+    getData();
+  }, [search]);
 
   const handleCloseModal = (text) => {
     message.success(text);
   };
 
-  const onTabChange = (tab) => {
-    console.log('tab')
-    console.log(tab)
-  }
+  const onTabChange = (t) => {
+    setTab(t);
+  };
 
   const openDeleteModal = (category) => {
     setDeleteModalVisible(true);
     setSelectedCategory(category);
-  }
+  };
+
+  const filterCategories = () => {
+    const data = categories.filter((c) => c.name.includes(search));
+  };
 
   const categoriesColumns = [
     {
@@ -120,19 +149,19 @@ const NewExpression = ({ updateDashboard }) => {
     {
       title: "Ações",
       key: "action",
-      width: '20%',
+      width: "20%",
       render: (_, record) => (
         <Space size="middle">
-            <Button
-              onClick={() => openDeleteModal(record.id)}
-              type="primary"
-              danger
-              icon={<DeleteOutlined />}
-            />
+          <Button
+            onClick={() => openDeleteModal(record.id)}
+            type="primary"
+            danger
+            icon={<DeleteOutlined />}
+          />
         </Space>
       ),
     },
-  ]
+  ];
 
   const expressionsColumns = [
     {
@@ -182,14 +211,14 @@ const NewExpression = ({ updateDashboard }) => {
         onCancel={() => setDeleteModalVisible(false)}
       >
         <div className="delete-modal-icon">
-          <WarningOutlined style={{color: 'orange', fontSize: '100px'}} />
+          <WarningOutlined style={{ color: "orange", fontSize: "100px" }} />
         </div>
         <div className="delete-modal-text">
-          Ao deletar uma categoria, todas as expressões vinculadas à ela também serão excluídas. Deseja prosseguir?
+          Ao deletar uma categoria, todas as expressões vinculadas à ela também
+          serão excluídas. Deseja prosseguir?
         </div>
       </Modal>
-      {
-        modalVisible  &&
+      {modalVisible && (
         <ExpressionModal
           handleClose={handleCloseModal}
           edit={edit}
@@ -197,7 +226,7 @@ const NewExpression = ({ updateDashboard }) => {
           visible={modalVisible}
           setVisible={setModalVisible}
         />
-      }
+      )}
       <div className="ne-header">
         <div className="ne-search">
           <Search
@@ -217,20 +246,26 @@ const NewExpression = ({ updateDashboard }) => {
           </span>
         </Button>
       </div>
-      <Tabs defaultActiveKey="1" onChange={onTabChange}>
-        <TabPane tab="Expressões" key="1">
+      <Tabs defaultActiveKey="expressoes" onChange={onTabChange}>
+        <TabPane tab="Expressões" key="expressoes">
           <div className="ne-table">
-            <Table columns={expressionsColumns} dataSource={expressions} loading={loading} />
+            <Table
+              columns={expressionsColumns}
+              dataSource={expressions}
+              loading={loading}
+            />
           </div>
         </TabPane>
-        <TabPane tab="Categorias" key="2">
+        <TabPane tab="Categorias" key="categoria">
           <div className="ne-table">
-            <Table columns={categoriesColumns} dataSource={categories} loading={loading} />
+            <Table
+              columns={categoriesColumns}
+              dataSource={categories}
+              loading={loading}
+            />
           </div>
         </TabPane>
       </Tabs>
-
-      
     </div>
   );
 };

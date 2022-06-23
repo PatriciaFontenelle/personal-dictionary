@@ -12,6 +12,7 @@ import "./profile.css";
 const Profile = () => {
   const [originalEmail, setOriginalEmail] = useState("");
   const [alterarSenha, setAlterarSenha] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const { user, setUser } = useUser();
 
@@ -32,7 +33,9 @@ const Profile = () => {
   };
 
   const save = (values) => {
+    setLoading(true);
     api.put(`users/${user.id}/`, user).then((res) => {
+      setLoading(false);
       message.success("Alterações salvas com sucesso!");
       localStorage.setItem(USER_FIELD, JSON.stringify(user));
       if (user.email !== originalEmail) Logout();
@@ -95,7 +98,7 @@ const Profile = () => {
             />
           </Form.Item>
           <Form.Item className="profile-footer">
-            <Button htmlType="submit" type="primary">
+            <Button loading={loading} htmlType="submit" type="primary">
               Salvar
             </Button>
             <Button onClick={() => setAlterarSenha(true)}>Alterar senha</Button>

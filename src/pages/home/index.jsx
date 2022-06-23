@@ -25,7 +25,10 @@ const Home = () => {
     api
       .get("/dashboard/")
       .then((response) => setData(response.data))
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        console.log('deu ruim')
+        console.error(error)
+      });
   };
 
   useEffect(() => {
@@ -77,7 +80,7 @@ const Home = () => {
             <Play
               setCompletedCategory={setCompletedCategory}
               dashboardData={data}
-              category={gameCategory.id}
+              category={gameCategory}
               handleEmptyCategory={handleEmptyCategory}
               setCategory={setGameCategory}
               updateDashboard={(e) => getData()}

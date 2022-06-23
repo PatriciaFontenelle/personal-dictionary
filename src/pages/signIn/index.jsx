@@ -27,7 +27,8 @@ const SignIn = () => {
         history.push("/");
       })
       .catch((error) => {
-        const eMessage = Object.values(error.response.data)[0][0];
+        console.log(error)
+        const eMessage = Object.values(error.response?.data)[0][0];
         if (eMessage !== "Este campo é obrigatório.") message.error(eMessage);
         setLoading(false);
       });

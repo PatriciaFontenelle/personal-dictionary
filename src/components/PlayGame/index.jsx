@@ -19,18 +19,27 @@ const Play = ({
   const [loading, setLoading] = useState(false);
   const [meaning, setMeaning] = useState("");
   const [status, setStatus] = useState(null);
+  const [currentLevel, setCurrentLevel] = useState(null);
   
   const history = useHistory();
  
   const getData = (source) => {
+    console.log('category')
+    console.log(category)
+    if(category.complete === true) {
+      message.success('Você já completou essa categoria.');
+      setCategory(null);
+      return;
+    }
+
     setLoading(true);
     const params = {
-      category,
+      category: category.id,
     };
     api
       .get("/play/", { params })
       .then((response) => {
-        console.log("response.data.response");
+        console.log("responsegame");
         console.log(response);
         if (response.data.results.length != 0) {
           console.log("response.data?.results");
@@ -55,9 +64,9 @@ const Play = ({
   const onCategoryFinish = () => {
     message.success('Parabéns! Você completou todas as expressões desta categoria!') 
     setTimeout(() => {
-      setCompletedCategory(category);
+      setCompletedCategory(category.id);
       setCategory(null)
-    }, 5000)
+    }, 500)
   }
 
   const onSubmit = () => {
@@ -84,6 +93,14 @@ const Play = ({
   useEffect(() => {
     getData();
   }, []);
+
+  useEffect(() => {
+    if(status === true && dashboardData.words === (dashboardData.level_hits + 1)) {
+      message.success('Parabéns, Você completou mais uma rodada!');
+      setCategory(null);
+      getData();
+    }
+  }, [status])
 
   return (
     <>
@@ -186,7 +203,7 @@ const Play = ({
               block
               type="primary"
               onClick={() => getData('proximo-btn')}
-              disabled={!status}
+              disabled={status === null}
             >
               Próximo
             </Button>

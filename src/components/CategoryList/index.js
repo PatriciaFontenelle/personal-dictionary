@@ -1,6 +1,6 @@
 import { List, Typography } from "antd";
 import { useEffect, useState } from "react";
-import { RightOutlined } from '@ant-design/icons';
+import { RightOutlined, CheckCircleFilled } from "@ant-design/icons";
 import api from "../../services/api";
 
 import "./categoryList.css";
@@ -15,13 +15,20 @@ const CategoryList = (props) => {
 
   const getExpressions = () => {
     api
-      .get("/categories/", {params: {
-        used: true
-      }})
+      .get("/categories/", {
+        params: {
+          used: true,
+        },
+      })
       .then((res) => {
-        let categoria
-        setCategories([{id: null, name: 'Todas as categorias'}, {id: 'no-category', name: 'Sem categoria'},...res.data.results])
-        setLoading(false)
+        console.log("res.data.results");
+        console.log(res.data.results);
+        setCategories([
+          { id: null, name: "Todas as categorias" },
+          { id: "no-category", name: "Sem categoria" },
+          ...res.data.results,
+        ]);
+        setLoading(false);
       })
       .catch((e) => {
         console.error(e);
@@ -29,8 +36,10 @@ const CategoryList = (props) => {
   };
 
   const selectCategory = (e) => {
-      props.setCategory(e);
-  }
+    console.log('e')
+    console.log(e)
+    props.setCategory(e);
+  };
 
   return (
     <div>
@@ -40,12 +49,20 @@ const CategoryList = (props) => {
         itemLayout="vertical"
         loading={loading}
         renderItem={(item) => (
-          <List.Item 
-            onClick={() => selectCategory(item)} 
-            extra={<RightOutlined />}
-            style={{cursor: 'pointer'}}
+          <List.Item
+            onClick={() => selectCategory(item)}
+            extra={
+              item.complete ? (
+                <CheckCircleFilled
+                  style={{ fontSize: "20px", color: "green" }}
+                />
+              ) : (
+                <RightOutlined />
+              )
+            }
+            style={{ cursor: "pointer" }}
           >
-            <Typography.Text mark></Typography.Text> {item.name}
+            {item.name}
           </List.Item>
         )}
       />
